@@ -1,5 +1,4 @@
-# Change Directory Choice
-#
+#!/bin/bash
 
 # Change Directory Choice
 # Description: This function will prompt the user to select a choice between the directories in the current directory. Once selected the user will cd into the selected directory.
@@ -12,7 +11,7 @@
 
   # `-z` check if the variable is empty, in this case we print the error message and return 1 (error code)
   if [ -z "$dir_list" ]; then
-    echo "cdc: No psubdirectories found in the current directory."
+    echo "cdc: No subdirectories found in the current directory."
     return 1
   fi
 
