@@ -4,7 +4,7 @@
 # Description: This function will prompt the user to select a choice between the directories in the current directory. Once selected the user will cd into the selected directory.
 # Arguments: None.
 # Usage: cdc
--cdc(){
+cdc(){
   # `ls -d */` gonna list all the subdirectories in the current directory
   # `2> /dev/null` gonna redirect the error message to /dev/null suppresing it to be printed
   dir_list=$(ls -d */ 2> /dev/null)
@@ -29,13 +29,13 @@
 # Git Diff Main File
 # Description: This function will show a list of the files changed on Git since the last main branch commit. After selecting a file, it will show the diff of the file.
 # No parameters
--gdmf()
+gdmf()
 {
   git fetch --prune
   git diff origin/main -- $(git diff origin/main --name-only | fzf)
 }
 
--gcore()
+gcore()
 {
   git fetch --prune
   branche=$(git branch -r |\
