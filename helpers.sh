@@ -4,7 +4,7 @@
 # Description: This function will prompt the user to select a choice between the directories in the current directory. Once selected the user will cd into the selected directory.
 # Arguments: None.
 # Usage: cdc
-ccdc(){
+cdc(){
   # `ls -d */` gonna list all the subdirectories in the current directory
   # `2> /dev/null` gonna redirect the error message to /dev/null suppresing it to be printed
   dir_list=$(ls -d */ 2> /dev/null)
