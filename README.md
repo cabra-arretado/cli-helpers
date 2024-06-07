@@ -9,7 +9,7 @@ This is meant to be a starting point for you to learn and create your own helper
 ## Installation
 To install the helpers you can clone this repository and add the following line to your `.bashrc` or `.zshrc` file:
 ```bash
-source <path>/cli-helpers.sh
+source <path>/helpers.sh
 ```
 OR 
 you can just copy the function you want into your `.bashrc` or `.zshrc` file.
