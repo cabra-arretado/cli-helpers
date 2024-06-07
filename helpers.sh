@@ -15,15 +15,15 @@ cdc(){
     return 1
   fi
 
-  # Pipe the list to fzf. Once selected in fzf we store the selected directory in the variable `selected_dir`
-  selected_dir=$("$dir_list" | fzf)
+  # Pipe the echoed list to fzf. Once selected in fzf we store the selected directory in the variable `selected_dir`
+  selected_dir=$(echo "$dir_list" | fzf)
   # `-z` check if the variable is empty, in this case we print the error message and return 1 (error code)
-  if [ -z "$dir_list" ]; then
+  if [ -z "$selected_dir" ]; then
     echo "cdc: No directory selected"
     return 1
   fi
   # if everything is okay we just cd into the selected directory
-  cd $dir_list
+  cd "$selected_dir"
 }
 
 # ------ Git Diff Main Files ------
