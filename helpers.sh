@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --------- Change Directory Choice ---------
-# Description: This function will prompt the user to select a choice between the directories in the current directory. Once selected the user will cd into the selected directory.
+# Description: This function will prompt the user to select a choice between the subdirectories in the current directory. Once selected the user will cd into the selected directory.
 # Arguments: None.
 # Usage: cdc
 cdc(){
