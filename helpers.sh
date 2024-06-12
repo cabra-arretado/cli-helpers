@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # --------- Change Directory Choice ---------
-# Description: This function will prompt the user to select a choice between the subdirectories in the current directory. Once selected the user will cd into the selected directory.
-# Arguments: None.
-# Usage: cdc
+# WHEN I USE: When I want to change to a subdirectory that I don't remember the name
+# DESCRIPTION: This function will prompt the user to select a choice between the subdirectories in the current directory. Once selected the user will cd into the selected directory.
+# ARGUMENTS: None.
+# USAGE: cdc
 cdc(){
   # `ls -d */` gonna list all the subdirectories in the current directory
-  # `2> /dev/null` gonna redirect the error message to /dev/null suppresing it to be printed
-  dir_list=$(ls -d */ 2> /dev/null)
+  dir_list=$(ls -d */)
 
   # `-z` check if the variable is empty, in this case we print the error message and return 1 (error code)
   if [ -z "$dir_list" ]; then
@@ -27,6 +27,7 @@ cdc(){
 }
 
 # ------ Git Diff Main Files ------
+# WHEN I USE: When I want to see the changes in the files since the last main branch commit
 # Description: This function will show a list of the files changed on Git since the last main branch commit. After selecting a file, it will show the diff of the file.
 # No parameters
 gdmf()
