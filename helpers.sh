@@ -2,6 +2,7 @@
 
 # --------- Change Directory Choice ---------
 # WHEN I USE: When I want to change to a subdirectory that I don't remember the name
+# DEPENDENCIES: fzf, ls
 # DESCRIPTION: This function will prompt the user to select a choice between the subdirectories in the current directory. Once selected the user will cd into the selected directory.
 # ARGUMENTS: None.
 # USAGE: cdc
@@ -26,22 +27,59 @@ cdc(){
   cd "$selected_dir"
 }
 
-# ------ Git Diff Main Files ------
-# WHEN I USE: When I want to see the changes in the files since the last main branch commit
-# Description: This function will show a list of the files changed on Git since the last main branch commit. After selecting a file, it will show the diff of the file.
-# No parameters
+# ------ Git Diff Main File ------
+# WHEN I USE: When I want to see the changes in the ONE specific file since the last main branch commit
+# DESCRIPTION: This function will show a list of the files changed on Git since the last main branch commit. After selecting a file, it will show the diff of the file.
+# DEPENDENCIES: fzf, git
+# PARAMETERS: No parameters
+# USAGE: gdmf
 gdmf()
 {
+  # Fetch the last changes from the remore repository, and prune branches that no longer exist
   git fetch --prune
-  git diff origin/main -- $(git diff origin/main --name-only | fzf)
+  changed_files=$(git diff origin/main --name-only)
+
+  # Check if there are no files changed since the last main branch commit
+  if [ -z "$changed_files" ]; then
+    echo "No files changed since the last main branch commit"
+    return 0
+  fi
+
+  # Show the list of files changed since the last main branch commit
+  file_to_diff=$(echo "$changed_files" | fzf)
+
+  # If not file is selected, return 1
+  if [ -z "$file_to_diff" ]; then
+    echo "No file selected"
+    return 1
+  fi
+
+  # Show the diff of the selected file
+  git diff origin/main -- "$file_to_diff"
 }
 
+# ------ Git Checkout Remote Branch ------
+# WHEN I USE: When I want to checkout a remote branch that I don't remeber the exact name
+# DESCRIPTION: This function will show a list of the remote branches and checkout the selected branch
+# DEPENDENCIES: fzf, git
+# PARAMETERS: No parameters
+# USAGE: gcore
 gcore()
 {
+  # Fetch the last changes from the remore repository, and prune branches that no longer exist
   git fetch --prune
+
+  # Show the list of remote branches and checkout the selected branch
   branche=$(git branch -r |\
     sed 's/origin\///' |\
     sed 's/^[[:space:]]*//' |\
     fzf)
-  git checkout $branche
+
+  # If no branch is selected, return 1
+  if [ -z "$branche" ]; then
+    echo "No branch selected"
+    return 1
+  fi
+
+  git checkout "$branche"
 }
