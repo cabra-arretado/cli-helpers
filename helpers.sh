@@ -77,9 +77,18 @@ gcoremo()
     echo "No remote branches found"
     return 1
   fi
+  echo "branches1: $branches"
+
+  # let's remove the "HEAD -> " prefix from the branches using sed
+  branches=$(echo "$branches" | sed 's/origin\/HEAD -> origin\/main//g')
+  #TODO: to use wildcard for anything ater the origin/HEAD
+
+  # remove the leading spaces from the branches using sed
+  branches=$(echo "$branches" | sed '/^[[:space:]]*$/d')
 
   # remove the "origin/" prefix from the branches using sed
   branches=$(echo "$branches" | sed 's/origin\///')
+
 
   # remove the leading spaces from the branches using sed
   branches=$(echo "$branches" | sed 's/^[[:space:]]*//')
