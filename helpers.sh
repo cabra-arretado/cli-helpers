@@ -63,7 +63,7 @@ gdmf()
 # DESCRIPTION: This function will show a list of the remote branches and checkout the selected branch
 # DEPENDENCIES: fzf, git, sed
 # PARAMETERS: No parameters
-# USAGE: gcore
+# USAGE: gcoremo
 gcoremo()
 {
   # Fetch the last changes from the remore repository, and prune branches that no longer exist
