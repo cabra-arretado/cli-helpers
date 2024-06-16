@@ -58,28 +58,42 @@ gdmf()
   git diff origin/main -- "$file_to_diff"
 }
 
-# ------ Git Checkout Remote Branch ------
+# ------ Git CheckOut REMOte ------
 # WHEN I USE: When I want to checkout a remote branch that I don't remeber the exact name
 # DESCRIPTION: This function will show a list of the remote branches and checkout the selected branch
-# DEPENDENCIES: fzf, git
+# DEPENDENCIES: fzf, git, sed
 # PARAMETERS: No parameters
 # USAGE: gcore
-gcore()
+gcoremo()
 {
   # Fetch the last changes from the remore repository, and prune branches that no longer exist
   git fetch --prune
 
-  # Show the list of remote branches and checkout the selected branch
-  branche=$(git branch -r |\
-    sed 's/origin\///' |\
-    sed 's/^[[:space:]]*//' |\
-    fzf)
+  # declared list of remote branches and store the selected branch in the variable
+  branches=$(git branch -r)
+
+  # If no branches are found, return 1
+  if [ -z "$branches" ]; then
+    echo "No remote branches found"
+    return 1
+  fi
+
+  # remove the "origin/" prefix from the branches using sed
+  branches=$(echo "$branches" | sed 's/origin\///')
+
+  # remove the leading spaces from the branches using sed
+  branches=$(echo "$branches" | sed 's/^[[:space:]]*//')
+
+  # Select the branch using fzf
+  selected_branch=$(echo "$branches" | fzf)
+
 
   # If no branch is selected, return 1
-  if [ -z "$branche" ]; then
+  if [ -z "$selected_branch" ]; then
     echo "No branch selected"
     return 1
   fi
 
+  # Checkout the selected branch
   git checkout "$branche"
 }
