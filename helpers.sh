@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# --------- Constants ---------
-# This variables will change the default behavior of the functions
-
-# This will be the command that will be used to view the diff of the file
-export DIFF_VIEWER="nvim -R"
-
 # --------- Change Directory Choice ---------
 # WHEN I USE: When I want to change to a subdirectory that I don't remember the name
 # DEPENDENCIES: fzf, ls
@@ -61,16 +55,7 @@ gdmf()
   fi
 
   # Show the diff of the selected file
-  if [ -z "$DIFF_VIEWER" ]; then
-    # If the DIFF_VIEWER is not set, we just use the default git diff
-    git diff origin/main -- "$file_to_diff"
-    return 0
-  else
-    # If the DIFF_VIEWER is set, we use it to show the diff.
-    # We use eval to execute the command stored in the variable
-    git diff origin/main -- "$file_to_diff" | eval $DIFF_VIEWER
-    return 0
-  fi
+  git diff origin/main -- "$file_to_diff"
 }
 
 # ------ Git CheckOut REMOte ------
@@ -92,6 +77,7 @@ gcoremo()
     echo "No remote branches found"
     return 1
   fi
+  echo "branches1: $branches"
 
   # let's remove the "HEAD -> " prefix from the branches using sed
   branches=$(echo "$branches" | sed 's/origin\/HEAD -> origin\/main//g')
